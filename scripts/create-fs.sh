@@ -90,8 +90,12 @@ mount -t sysfs /sys ${BUILD_ROOT}/sys
 mount -t proc /proc ${BUILD_ROOT}/proc
 
 # do this to avoid failing apt installs due to a too old fs-cache
-chroot ${BUILD_ROOT} apt-get update
-
+if [ "$3" = "jammy" ] || [ "$3" = "noble" ] || [ "$3" = "bookworm" ] || [ "$3" = "trixie" ]; then
+  chroot ${BUILD_ROOT} apt-get update
+fi
+if [ "$3" = "void" ]; then
+  chroot ${BUILD_ROOT} xbps-install -Su
+fi
 cp ${WORKDIR}/scripts/create-chroot-stage-02.sh ${BUILD_ROOT}
 
 chroot ${BUILD_ROOT} /create-chroot-stage-02.sh ${3} ${DEFAULT_USERNAME}
@@ -219,15 +223,16 @@ fi
 # first boot for each installed image
 rm -f etc/ssh/*key*
 # activate the one shot service to recreate them on first boot
-mkdir -p etc/systemd/system/multi-user.target.wants
-( cd etc/systemd/system/multi-user.target.wants ;  ln -s ../regenerate-ssh-host-keys.service . )
+if [ "$3" = "jammy" ] || [ "$3" = "noble" ] || [ "$3" = "bookworm" ] || [ "$3" = "trixie" ]; then
+  mkdir -p etc/systemd/system/multi-user.target.wants
+  ( cd etc/systemd/system/multi-user.target.wants ;  ln -s ../regenerate-ssh-host-keys.service . )
 
-# delete random-seed and machine-id according to https://systemd.io/BUILDING_IMAGES/
-# so that they get created unique per machine on first boot
-# inspired by: https://github.com/armbian/build/pull/3774
-echo "uninitialized" > etc/machine-id
-rm -f var/lib/systemd/random-seed var/lib/dbus/machine-id
-
+  # delete random-seed and machine-id according to https://systemd.io/BUILDING_IMAGES/
+  # so that they get created unique per machine on first boot
+  # inspired by: https://github.com/armbian/build/pull/3774
+  echo "uninitialized" > etc/machine-id
+  rm -f var/lib/systemd/random-seed var/lib/dbus/machine-id
+fi
 # if a different default user name was set, parse it into the rename user script
 sed -i "s,DEFAULT_USERNAME=linux,DEFAULT_USERNAME=${DEFAULT_USERNAME},g" scripts/rename-default-user.sh
 

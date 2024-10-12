@@ -24,6 +24,7 @@ if [ "$#" != "3" ]; then
   echo "- sidriscv - debian sid (riscv only as others are not useable on riscv yet)"
   echo "- jammy - ubuntu jammy (should work)"
   echo "- noble - ubuntu noble (experimental wip)"
+  echo "- void - very experimental (might work)"
   echo ""
   echo "example: ${0} odroid_u3 armv7l bookworm"
   echo ""

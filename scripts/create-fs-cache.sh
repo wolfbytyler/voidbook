@@ -141,7 +141,21 @@ if [ ! -d ${BUILD_ROOT_CACHE} ]; then
     cp ${WORKDIR}/files/trixie-${BOOTSTRAP_ARCH}-sources.list ${BUILD_ROOT_CACHE}/etc/apt/sources.list
     # parse in the proper debian version
     sed -i "s,DEBIANVERSION,trixie,g" ${BUILD_ROOT_CACHE}/etc/apt/sources.list
-  elif [ "${2}" = "sidriscv" ]; then
+   elif [ "${2}" = "void" ]; then
+    LANG=C curl --output ${BUILD_ROOT_CACHE}/void.tar.xz https://repo-default.voidlinux.org/live/current/void-${BOOTSTRAP_ARCH}-ROOTFS-20240314.tar.xz #not the newest
+    LANG=C tar xvf ${BUILD_ROOT_CACHE}/void.tar.xz ${BUILD_ROOT_CACHE}/
+    # exit if curl fails for some reason
+    if [ "$?" != "0" ]; then
+      echo ""
+      echo "error while running debootstrap - giving up"
+      echo ""
+      rm -rf ${BUILD_ROOT_CACHE}
+      exit 1
+    fi
+    cp ${WORKDIR}/files/sidriscv-${BOOTSTRAP_ARCH}-sources.list ${BUILD_ROOT_CACHE}/etc/apt/sources.list
+    # parse in the proper debian version
+    sed -i "s,DEBIANVERSION,sid,g" ${BUILD_ROOT_CACHE}/etc/apt/sources.list
+elif [ "${2}" = "sidriscv" ]; then
     LANG=C debootstrap --variant=minbase --arch=${BOOTSTRAP_ARCH} sid ${BUILD_ROOT_CACHE} http://deb.debian.org/debian/
     # exit if debootstrap failed for some reason
     if [ "$?" != "0" ]; then
@@ -154,7 +168,7 @@ if [ ! -d ${BUILD_ROOT_CACHE} ]; then
     cp ${WORKDIR}/files/sidriscv-${BOOTSTRAP_ARCH}-sources.list ${BUILD_ROOT_CACHE}/etc/apt/sources.list
     # parse in the proper debian version
     sed -i "s,DEBIANVERSION,sid,g" ${BUILD_ROOT_CACHE}/etc/apt/sources.list
-  else
+ else
     echo ""
     echo "${2} is not supported as release - giving up!"
     echo ""

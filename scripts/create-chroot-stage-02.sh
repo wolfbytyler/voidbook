@@ -2,8 +2,11 @@
 
 # do not ask anything
 export DEBIAN_FRONTEND=noninteractive
-
+# most of this stuff is debian/ubuntu/systemd specific so that's why there is 1 really long
 export LANG=C
+if ["${1}" = "jammy" ] || ["${1}" = "noble" ] || ["${1}" = "bookworm" ] || ["${1}" = "trixie" ]; then
+
+
 
 systemctl enable ssh
 systemctl disable fstrim.timer
@@ -43,6 +46,10 @@ if [ "${1}" = "jammy" ] || [ "${1}" = "noble" ]; then
   sed -i 's,Update-Package-Lists "1",Update-Package-Lists "0",g;s,Unattended-Upgrade "1",Unattended-Upgrade "0",g' /etc/apt/apt.conf.d/20auto-upgrades
 fi
 
+
+
+fi
+
 useradd -c ${2} -d /home/${2} -m -p '$6$sEhhlter$njAiCsaYr7lveaAQCmsABlrGbrVip/lcBUlY2M9DUHfaUh0zSLfcJ4mN0BDqH7bg/2BITbp7BK3qPf8zR.3Ad0' -s /bin/bash ${2}
 usermod -a -G sudo ${2}
 usermod -a -G audio ${2}
@@ -51,12 +58,21 @@ usermod -a -G render ${2}
 
 # setup locale info for en-us
 sed -i 's,# en_US ISO-8859-1,en_US ISO-8859-1,g;s,# en_US.UTF-8 UTF-8,en_US.UTF-8 UTF-8,g' /etc/locale.gen
+
+if ["${1}" = "jammy" ] || ["${1}" = "noble" ] || ["${1}" = "bookworm" ] || ["${1}" = "trixie" ]; then
 locale-gen
+fi
+
+if ["${1}" = "void" ]; then
+sudo xbps-reconfigure -f glibc-locales
+fi
 
 # remove snapd and dmidecode (only on ubuntu) as it crashes on some arm devices on boot
 if [ "${1}" = "jammy" ] || [ "${1}" = "noble" ]; then
   apt-get -yq remove snapd dmidecode
 fi
+
+if ["${1}" = "jammy" ] || ["${1}" = "noble" ] || ["${1}" = "bookworm" ] || ["${1}" = "trixie" ]; then
 
 apt-get -yq auto-remove
 apt-get clean
@@ -65,4 +81,6 @@ apt-get clean
 # as it does not yet have a working hdmi output and lighdm would fail
 if [ -f /boot/uEnv.ini ]; then
   systemctl disable lightdm
+fi
+
 fi
