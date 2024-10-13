@@ -297,12 +297,12 @@ if [ -d ${BUILD_ROOT}/postinstall ]; then
 fi
 
 # recompile glib schemas to enable our onboard settings
-chroot ${BUILD_ROOT} glib-compile-schemas /usr/share/glib-2.0/schemas/
+# chroot ${BUILD_ROOT} glib-compile-schemas /usr/share/glib-2.0/schemas/
 
 # remove libreoffice and do a final cleanup to get the size of the image down a bit
-chroot ${BUILD_ROOT} apt-get -y remove --purge libreoffice*
-chroot ${BUILD_ROOT} apt-get -y auto-remove
-chroot ${BUILD_ROOT} apt-get -y clean
+# chroot ${BUILD_ROOT} apt-get -y remove --purge libreoffice*
+# chroot ${BUILD_ROOT} apt-get -y auto-remove
+# chroot ${BUILD_ROOT} apt-get -y clean
 
 chroot ${BUILD_ROOT} ldconfig
 
@@ -321,7 +321,7 @@ if [ "${PMOSKERNEL}" != "true" ]; then
     # hack to get the fsck binaries in properly even in our chroot env
     cp -f usr/share/initramfs-tools/hooks/fsck tmp/fsck.org
     sed -i 's,fsck_types=.*,fsck_types="vfat ext4",g' usr/share/initramfs-tools/hooks/fsck
-    chroot ${BUILD_ROOT} update-initramfs -c -k ${KERNEL_VERSION}
+    chroot ${BUILD_ROOT} dracut --force -kver ${KERNEL_VERSION}
     mv -f tmp/fsck.org usr/share/initramfs-tools/hooks/fsck
   fi
 else

@@ -142,8 +142,8 @@ if [ ! -d ${BUILD_ROOT_CACHE} ]; then
     # parse in the proper debian version
     sed -i "s,DEBIANVERSION,trixie,g" ${BUILD_ROOT_CACHE}/etc/apt/sources.list
    elif [ "${2}" = "void" ]; then
-    LANG=C curl --output ${BUILD_ROOT_CACHE}/void.tar.xz https://repo-default.voidlinux.org/live/current/void-${BOOTSTRAP_ARCH}-ROOTFS-20240314.tar.xz #not the newest
-    LANG=C tar xvf ${BUILD_ROOT_CACHE}/void.tar.xz ${BUILD_ROOT_CACHE}/
+    LANG=C curl --output ${BUILD_ROOT_CACHE}/void.tar.xz https://repo-default.voidlinux.org/live/current/void-aarch64-ROOTFS-20240314.tar.xz #not the newest
+    LANG=C tar xvf ${BUILD_ROOT_CACHE}/void.tar.xz -C ${BUILD_ROOT_CACHE}/
     # exit if curl fails for some reason
     if [ "$?" != "0" ]; then
       echo ""

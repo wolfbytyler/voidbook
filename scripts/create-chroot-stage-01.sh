@@ -26,7 +26,7 @@ elif [ "$1" = "bookworm" ]; then
 elif [ "$1" = "void" ]; then
   xbps-install -Suy
   xbps-install -Suy
-  xbps-install -y locales vim openssh ssh-pass sudo net-tools ifupdown iputils kmod less rsync u-boot-tools usbutils dosfstools mesa-demos iwd #xfce4 xf86-input-synaptics blueman linux-firmware firmware-misc-nonfree firmware-brcm80211 firmware-iwlwifi firmware-intel-sound firmware-samsung firmware-libertas firmware-realtek firmware-qcom-soc firmware-qcom-media firmware-atheros pulseaudio pavucontrol lvm2 cryptsetup-bin cryptsetup cryptsetup-initramfs slick-greeter btrfs-progs btrfs-compsize dialog cgpt lz4 vboot-kernel-utils bc plymouth plymouth-themes xserver-xorg-video-fbdev xinput rfkill curl onboard gnome-system-tools gnome-system-monitor firmware-sof-signed git strace glmark2 pwgen fdisk gdisk libglib2.0-bin initramfs-tools tasksel
+  xbps-install -y dracut vim openssh ssh-pass sudo net-tools ifupdown iputils kmod less rsync u-boot-tools usbutils dosfstools mesa-demos iwd #xfce4 xf86-input-synaptics blueman linux-firmware firmware-misc-nonfree firmware-brcm80211 firmware-iwlwifi firmware-intel-sound firmware-samsung firmware-libertas firmware-realtek firmware-qcom-soc firmware-qcom-media firmware-atheros pulseaudio pavucontrol lvm2 cryptsetup-bin cryptsetup cryptsetup-initramfs slick-greeter btrfs-progs btrfs-compsize dialog cgpt lz4 vboot-kernel-utils bc plymouth plymouth-themes xserver-xorg-video-fbdev xinput rfkill curl onboard gnome-system-tools gnome-system-monitor firmware-sof-signed git strace glmark2 pwgen fdisk gdisk libglib2.0-bin initramfs-tools tasksel
 elif [ "$1" = "trixie" ]; then
   apt-get update
   apt-get -yq upgrade

@@ -387,7 +387,7 @@ mount -t sysfs /sys ${MOUNT_POINT}/sys
 mount -t proc /proc ${MOUNT_POINT}/proc
 
 # do this to avoid failing apt installs due to a too old fs-cache
-chroot ${MOUNT_POINT} apt-get update
+# chroot ${MOUNT_POINT} apt-get update
 
 if [ "${UEFI32}" = "true" ]; then
   chroot ${MOUNT_POINT} apt-get -yq install grub2-common grub-efi-ia32 grub-efi-ia32-bin
