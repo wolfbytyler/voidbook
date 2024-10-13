@@ -1,26 +1,3 @@
-# voidbook
-
-
-desc tbd
-i will rewrite the docs sometime in the future :)
-please note that ***I DO NOT HAVE ALL DEVICES SUPPORTED BY THIS*** and that ***I CAN'T TEST IMAGES FROM DEVICES OTHER THAN*** chromebook_kukui
-## Q&A
-Q: why won't you add support for (insert distro here)
-A: *i probably don't have time for it.*
-
-Q: I have bug X, how do i format my issue?
-A: i'm not too sure about this one, mabye format the title like "Image not booting (chromebook_trogodor)" or "Image not booting on kukui"
-
-todo:
-- get wifi working out of the box (iwd)
-- test bluetooth and other functions
-- add musl
-- remove debian stuff (should be easy)
-- fix armv7 support (probably going to be hard)
-- - - - - - - - - - - - - - - - 
-# ORIGINAL BELOW
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # velvet os - an introduction
 
 ![kappa and juniper with velvet](https://github.com/hexdump0815/linux-mainline-on-arm-chromebooks/raw/main/images/kappa-and-juniper-with-velvet.jpg "kappa and juniper with velvet")
